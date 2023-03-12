@@ -16,7 +16,7 @@ html, body{
 }
 .logo{
     width: 12%;
-    height: 100px;
+    height: 100%;
     background-color: wheat;
 }
 .nav-logo-img{
