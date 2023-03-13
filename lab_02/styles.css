@@ -1,0 +1,100 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color:rgb(50,49,75);
+    font-family: 'Roboto', sans-serif;
+    color: rgba(172, 172, 172, 0.603);
+}
+.nav-bar{
+    width: 100%;
+    height: 9%; 
+    margin: auto;
+    display: flex;
+    background-color:rgb(39,39,58)
+}
+.logo{
+    width: 12%;
+    height: 100%;
+    background-color: wheat;
+}
+.nav-logo-img{
+    height: 100%;
+    width: 100%;
+}
+.nav-links{    
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+    justify-items: center;
+}
+.nav-item{
+    color: rgb(127,127,127);
+    font-size:25px;
+    margin-right: 50px;
+    text-decoration: none;
+}
+.nav-item:hover{
+    color: white;
+}
+.main{
+    width: 100%;
+    height: 91%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.col-1{
+    padding: 0;
+    width: 40%;
+    height: 100%;
+    background-color:rgb(84, 84, 121);
+	display:flex;
+	flex-wrap:wrap;
+}
+.menu{
+	width:60%;
+	height:15%;
+	background-color:rgb(50,49,75);
+	margin:auto;
+	text-align:center;
+	line-height:10px;
+}
+.menu-play{
+	width:60%;
+	height:5%;
+	margin:auto;
+	display:flex;
+	justify-content:center;
+}
+.btn{
+	width:120px;
+	height:35px;
+}
+.col-2{
+    padding: 0;
+    width: 60%;
+    height: 100%;
+	display:flex;
+	
+}
+.game-block{
+	margin: auto;
+	width: 60%;
+	height: 60%;
+	background-color:black;
+	display:flex;
+	flex-wrap: wrap;
+}
+.col-1-text{
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.field{
+	margin: auto;
+	background-color:white;
+	width:30%;
+	height:30%;
+	border-radius:25px;
+}
