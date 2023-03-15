@@ -4,20 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>My Page</title>
-	<script>
-		function foo(){
-		
-		}
-	
-		let b1 = document.getElementById("btn-computer");
-		let b2 = document.getElementById("btn-computer");
-		b1.addEventListener("click",,false);
-	</script>
 </head>
 <body>
         <div class="nav-bar">
             <div class="logo">
-                <a href="" class="nav-logo"><img src="logo.PNG" alt="" class="nav-logo-img"></a>
+                <a href="" class="nav-logo"><img src="../logo.PNG" alt="" class="nav-logo-img"></a>
             </div>
             <div class="nav-links">
                 <a href="" class="nav-item">Strona Główna</a>
@@ -30,42 +21,203 @@
             <div class="col-1">
                 <div class="menu">
 					<p class="menu-text">Z kim chcesz zagrać?</p><br>
-					<button class="btn" Id="btn-computer">Z komputerem</button>
-					<button class="btn"Id="btn-player">Z drugą osobą</button>
+					<button class="btn btn-mode">Z komputerem</button>
+					<button class="btn btn-mode">Z drugą osobą</button>
 					<p class="player"></p>
 				</div>
 				<div class="menu">
 					<p class="menu-text">Czym chcesz grać?</p><br>
-						<button class="btn">O</button>
-						<button class="btn">X</button>
+						<button class="btn btn-game-sign">O</button>
+						<button class="btn btn-game-sign">X</button>
 						<p class="player"></p>
 				</div>
 				<div class="menu-play">
-						<button class="btn">Zagraj jeszcze raz</button>
+					<button id="btn-reset" class="btn">Reset</button>
+					<button id="btn-start" class="btn">Zagraj</button>
 				</div>
             </div>
             <div class="col-2">
+				<div class="player-box">
+					<p id="player-text"></p>
+				</div>
                 <div class="game-block">
-					<div class="field">
+					<div id="field1" class="field">
 					</div>
-					<div class="field">
+					<div id="field2" class="field">
 					</div>
-					<div class="field">
+					<div id="field3" class="field">
 					</div>
-					<div class="field">
+					<div id="field4" class="field">
 					</div>
-					<div class="field">
+					<div id="field5" class="field">
 					</div>
-					<div class="field">
+					<div id="field6" class="field">
 					</div>
-					<div class="field">
+					<div id="field7" class="field">
 					</div>
-					<div class="field">
+					<div id="field8" class="field">
 					</div>
-					<div class="field">
+					<div id="field9" class="field">
 					</div>
+				</div>
+				<div  class="victory-box">
+					<p id="victory-text"></p>
 				</div>
             </div>
         </div>
 
-</body></html>
+</body>
+<script>
+	Array.prototype.random = function () {
+	return this[Math.floor((Math.random()*this.length))];
+	}
+
+	oponent = "player";
+	sign = "X";
+	player1_sign="X";
+	player2_sign="O";
+	game= false;
+
+	let buttons = document.querySelectorAll("button")
+	let btns_game_mode = document.getElementsByClassName("btn-mode");
+	let btns_game_sign = document.getElementsByClassName("btn-game-sign");
+	let btn_start = document.getElementById("btn-start");
+	let btn_reset = document.getElementById("btn-reset");
+
+	let field1 = document.getElementById("field1")
+	let field2 = document.getElementById("field2")
+	let field3 = document.getElementById("field3")
+	let field4 = document.getElementById("field4")
+	let field5 = document.getElementById("field5")
+	let field6 = document.getElementById("field6")
+	let field7 = document.getElementById("field7")
+	let field8 = document.getElementById("field8")
+	let field9 = document.getElementById("field9")
+	let fields = [field1,field2,field3,field4,field5,field6,field7,field8,field9]
+
+	let victory = document.getElementById("victory-text")
+	let player = document.getElementById("player-text")
+
+	function check_victory(){
+		if((field1.innerHTML == sign && field2.innerHTML == sign && field3.innerHTML == sign)
+		 ||(field4.innerHTML == sign && field5.innerHTML == sign && field6.innerHTML == sign)
+		 ||(field7.innerHTML == sign && field8.innerHTML == sign && field9.innerHTML == sign)
+		 ||(field1.innerHTML == sign && field5.innerHTML == sign && field9.innerHTML == sign)
+		 ||(field3.innerHTML == sign && field5.innerHTML == sign && field7.innerHTML == sign)
+		 ||(field1.innerHTML == sign && field4.innerHTML == sign && field7.innerHTML == sign)
+		 ||(field2.innerHTML == sign && field5.innerHTML == sign && field8.innerHTML == sign)
+		 ||(field3.innerHTML == sign && field6.innerHTML == sign && field9.innerHTML == sign)
+		 ){
+			if(sign == player1_sign){
+				victory.innerHTML = "Gratulacje, wygrał gracz 1!";
+				game=false;
+				return true;
+			}
+			else{victory.innerHTML = "Gratulacje, wygrał gracz 2!"; game=false;return true}
+		}
+	}
+
+	function Select_oponent(ev){
+		if(this.innerHTML=='Z komputerem'){
+			oponent="computer";
+			player.innerHTML = "Grasz przeciwko komputerowi";
+		}
+		else if(this.innerHTML=='Z drugą osobą'){
+			oponent="player";
+		}
+	}
+
+	function Select_sign(ev){
+		if(this.innerHTML=='X'){
+			sign="X";
+			player1_sign="X"
+			player2_sign="O"
+		}
+		else if(this.innerHTML=='O'){
+			sign="O";
+			player1_sign="O";
+			player2_sign="X";
+		}
+	}
+
+	function change_text(ev){
+		if(game){
+			ev.currentTarget.innerHTML=sign;
+			ev.currentTarget.removeEventListener("click", change_text)
+			let index = fields.indexOf(ev.currentTarget)
+			fields.splice(index,1)
+			if(check_victory()) return;
+			if(oponent === "player"){
+				if(sign === player1_sign){sign = player2_sign; player.innerHTML = "Ruch gracza 2";}
+				else {sign = player1_sign; player.innerHTML = "Ruch gracza 1";}
+			}
+			else{
+				random_field = fields.random();
+				random_field.removeEventListener("click", change_text)
+				index = fields.indexOf(random_field);
+				fields.splice(index,1);
+				random_field.innerHTML=player2_sign;
+				sign = player2_sign;
+				check_victory();
+				sign = player1_sign;
+			}
+		}	
+	}
+
+	function start_game(ev){
+		btn_start.innerHTML="Zagraj jeszcze raz";
+		for (i of buttons){
+			i.disabled=true;
+		}
+		btn_reset.disabled=false;
+		game = true;
+		player.innerHTML = "Ruch gracza 1";
+		field1.addEventListener("click", change_text);
+		field2.addEventListener("click", change_text)
+		field3.addEventListener("click", change_text)
+		field4.addEventListener("click", change_text)
+		field5.addEventListener("click", change_text)
+		field6.addEventListener("click", change_text)
+		field7.addEventListener("click", change_text)
+		field8.addEventListener("click", change_text)
+		field9.addEventListener("click", change_text)
+	}
+
+	function reset_game(ev){
+		for (i of buttons){
+			i.disabled=false;
+			game=false;
+			oponent = "player";
+			sign = "X";
+			player.innerHTML = "";
+			victory.innerHTML = "";
+			field1.innerHTML="";
+			field2.innerHTML="";
+			field3.innerHTML="";
+			field4.innerHTML="";
+			field5.innerHTML="";
+			field6.innerHTML="";
+			field7.innerHTML="";
+			field8.innerHTML="";
+			field9.innerHTML="";
+			fields = [field1,field2,field3,field4,field5,field6,field7,field8,field9]
+		}
+	}
+	
+
+	
+
+	btn_start.addEventListener("click",start_game,false);
+	btn_reset.addEventListener("click",reset_game,false);
+
+	for (i of btns_game_mode){
+		i.addEventListener("click",Select_oponent,false);
+	}
+
+	for (i of btns_game_sign){
+		i.addEventListener("click",Select_sign,false);
+	}
+
+
+</script>
+</html>
