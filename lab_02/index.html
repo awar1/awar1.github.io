@@ -115,6 +115,11 @@
 			}
 			else{victory.innerHTML = "Gratulacje, wygrał gracz 2!"; game=false;return true}
 		}
+		else if(fields.length==0){
+			victory.innerHTML = "Gra zakończyła się remisem";
+			game = false; return true;
+		   }
+		return false;
 	}
 
 	function Select_oponent(ev){
@@ -146,6 +151,7 @@
 			ev.currentTarget.removeEventListener("click", change_text)
 			let index = fields.indexOf(ev.currentTarget)
 			fields.splice(index,1)
+			console.log(fields)
 			if(check_victory()) return;
 			if(oponent === "player"){
 				if(sign === player1_sign){sign = player2_sign; player.innerHTML = "Ruch gracza 2";}
@@ -172,15 +178,9 @@
 		btn_reset.disabled=false;
 		game = true;
 		player.innerHTML = "Ruch gracza 1";
-		field1.addEventListener("click", change_text);
-		field2.addEventListener("click", change_text)
-		field3.addEventListener("click", change_text)
-		field4.addEventListener("click", change_text)
-		field5.addEventListener("click", change_text)
-		field6.addEventListener("click", change_text)
-		field7.addEventListener("click", change_text)
-		field8.addEventListener("click", change_text)
-		field9.addEventListener("click", change_text)
+		fields.forEach(function(field){
+			field.addEventListener("click",change_text)
+		})
 	}
 
 	function reset_game(ev){
@@ -191,20 +191,12 @@
 			sign = "X";
 			player.innerHTML = "";
 			victory.innerHTML = "";
-			field1.innerHTML="";
-			field2.innerHTML="";
-			field3.innerHTML="";
-			field4.innerHTML="";
-			field5.innerHTML="";
-			field6.innerHTML="";
-			field7.innerHTML="";
-			field8.innerHTML="";
-			field9.innerHTML="";
 			fields = [field1,field2,field3,field4,field5,field6,field7,field8,field9]
+			fields.forEach(function(field){
+			field.innerHTML="";
+			})	
 		}
 	}
-	
-
 	
 
 	btn_start.addEventListener("click",start_game,false);
